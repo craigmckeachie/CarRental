@@ -43,8 +43,8 @@
         <label for="yn-option">No</label>
         <input type="radio" name="ynOption" id="yn-option" value="yes">
         <label for="yn-option">Yes</label>
-        <button onclick="estimatedTotalCost();">Estimated Total Cost</button>
     </fieldset>
+    <button onclick="estimateTotalCost();">Estimated Total Cost</button>
     <table>
         <tbody>
             <tr>
@@ -69,70 +69,52 @@
         </tfoot>
     </table>
     <script>
-        function estimatedTotalCost() {
-            //get query selectors are necessary for calculation
-
-            // //get number of days element/input
-            // const daysInput = document.getElementById("number-of-days");
-            // // get the value, turn string into number
-            // let days = parseInt(daysInput.value);
-
+        function estimateTotalCost() {
             let days = parseInt(document.getElementById("number-of-days").value);
-
-            // get checkbox element for toll tag
-            let tollTagCheckbox = document.getElementById("toll-tag");
-            // get the checkbox checked property and see if it's true
-            let tollTag = tollTagCheckbox.checked
-
-            // get checkbox element for gps
-            let gpsCheckbox = document.getElementById("gps");
-            // get the checkbox checked property and see if it's true
-            let gps = gpsCheckbox.checked
-
-            // get checkbox element for roadside
-            // let roadsideCheckbox = document.getElementById("roadside");
-            // // get the checkbox checked property and see if it's true
-            // let roadside = roadsideCheckbox.checked
-
-            // get checkbox element for roadside
+            let tollTag = document.getElementById("toll-tag").checked;
+            let gps = document.getElementById("gps").checked;
             let roadside = document.getElementById("roadside").checked;
-
-            // get selected option for age
-            let selectedOption = document.querySelector("input[name='ynOption']:checked");
+            let ageSurchageSelectedOption = document.querySelector("input[name='ynOption']:checked");
 
             //calculate total
             let carRentalCost = 29.99 * days;
-            let options = 0;
+            let optionsCost = calculateOptionsCost(tollTag, gps, roadside, days);
             let ageSurcharge = 0;
-
-
-            if (tollTag) {
-                options += (3.95 * days);
+            if (ageSurchageSelectedOption) {
+                ageSurcharge = calculateAgeSurcharge(ageSurchageSelectedOption.value, carRentalCost);
             }
-            if (gps) {
-                options += (2.95 * days);
-            }
-            if (roadside) {
-                options += (2.95 * days);
-            }
+            let total = calculateTotal(carRentalCost, optionsCost, ageSurcharge);
 
-
-            if (selectedOption && selectedOption.value === "yes") {
-                ageSurcharge = (carRentalCost * .3);
-            }
-
-            let total = carRentalCost + options + ageSurcharge;
-            //get element
-            const carRentalCostElement = document.getElementById("car-rental-cost");
-            //set, get something on the element
-            carRentalCostElement.innerText = carRentalCost;
-
-            document.getElementById("options-cost").innerText = options;
+            document.getElementById("car-rental-cost").innerText = carRentalCost;
+            document.getElementById("options-cost").innerText = optionsCost;
             document.getElementById("under25-cost").innerText = ageSurcharge;
             document.getElementById("total-cost").innerText = total;
+        }
 
+        function calculateOptionsCost(tollTag, gps, roadside, days) {
+            let optionsCost = 0;
+            if (tollTag) {
+                optionsCost += (3.95 * days);
+            }
+            if (gps) {
+                optionsCost += (2.95 * days);
+            }
+            if (roadside) {
+                optionsCost += (2.95 * days);
+            }
+            return optionsCost;
+        }
 
+        function calculateAgeSurcharge(ageSurchargeValue, carRentalCost) {
+            let ageSurcharge = 0;
+            if (ageSurchargeValue === "yes") {
+                ageSurcharge = (carRentalCost * .3);
+            }
+            return ageSurcharge
+        }
 
+        function calculateTotal(carRentalCost, optionsCost, ageSurcharge) {
+            return carRentalCost + optionsCost + ageSurcharge;
         }
     </script>
 </body>
