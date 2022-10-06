@@ -22,7 +22,7 @@
 
 <body>
     <h1>ACME Car Rental</h1>
-    <form action="" onsubmit="estimateTotalCost();">
+    <form onsubmit="estimateTotalCost(event);">
         <label for="pickup-date">Pickup date:</label>
         <input type="date" name="pickupDate" id="pickup-date">
         <label for="number-of-days">Number of days:</label>
@@ -71,7 +71,8 @@
         </tfoot>
     </table>
     <script>
-        function estimateTotalCost() {
+        function estimateTotalCost(event) {
+            event.preventDefault();
             let days = parseInt(document.getElementById("number-of-days").value);
             let tollTag = document.getElementById("toll-tag").checked;
             let gps = document.getElementById("gps").checked;
