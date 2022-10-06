@@ -22,29 +22,31 @@
 
 <body>
     <h1>ACME Car Rental</h1>
-    <label for="pickup-date">Pickup date:</label>
-    <input type="date" name="pickupDate" id="pickup-date">
-    <label for="number-of-days">Number of days:</label>
-    <input type="number" name="numberOfDays" id="number-of-days">
-    <fieldset>
-        <legend>Rental Car Options</legend>
-        <input type="checkbox" name="tollTag" id="toll-tag" value="tollTag">
-        <label for="toll-tag">Electronic Toll Tag ($3.95/day plus tolls)</label>
+    <form action="" onsubmit="estimateTotalCost();">
+        <label for="pickup-date">Pickup date:</label>
+        <input type="date" name="pickupDate" id="pickup-date">
+        <label for="number-of-days">Number of days:</label>
+        <input type="number" required name="numberOfDays" id="number-of-days">
+        <fieldset>
+            <legend>Rental Car Options</legend>
+            <input type="checkbox" name="tollTag" id="toll-tag" value="tollTag">
+            <label for="toll-tag">Electronic Toll Tag ($3.95/day plus tolls)</label>
 
-        <input type="checkbox" name="gps" id="gps" value="gps">
-        <label for="gps">GPS ($4.95/day)</label>
+            <input type="checkbox" name="gps" id="gps" value="gps">
+            <label for="gps">GPS ($4.95/day)</label>
 
-        <input type="checkbox" name="roadside" id="roadside" value="roadside">
-        <label for="roadside">Roadside Assistance ($2.95/day)</label>
-    </fieldset>
-    <fieldset>
-        <legend>Under 25</legend>
-        <input type="radio" name="ynOption" id="yn-option" value="no">
-        <label for="yn-option">No</label>
-        <input type="radio" name="ynOption" id="yn-option" value="yes">
-        <label for="yn-option">Yes</label>
-    </fieldset>
-    <button onclick="estimateTotalCost();">Estimated Total Cost</button>
+            <input type="checkbox" name="roadside" id="roadside" value="roadside">
+            <label for="roadside">Roadside Assistance ($2.95/day)</label>
+        </fieldset>
+        <fieldset>
+            <legend>Under 25</legend>
+            <input type="radio" name="ynOption" id="yn-option" value="no">
+            <label for="yn-option">No</label>
+            <input type="radio" name="ynOption" id="yn-option" value="yes">
+            <label for="yn-option">Yes</label>
+        </fieldset>
+        <button type="submit">Estimated Total Cost</button>
+    </form>
     <table>
         <tbody>
             <tr>
