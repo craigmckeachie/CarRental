@@ -92,10 +92,12 @@
 
             let total = calculateTotal(carRentalCost, optionsCost, ageSurcharge);
 
-            document.getElementById("car-rental-cost").innerText = carRentalCost.toFixed(2);
-            document.getElementById("options-cost").innerText = optionsCost.toFixed(2);
-            document.getElementById("under25-cost").innerText = ageSurcharge.toFixed(2);
-            document.getElementById("total-cost").innerText = total.toFixed(2);
+            const money = new Intl.NumberFormat('en-US',
+                { style: 'currency', currency: 'USD' });
+            document.getElementById("car-rental-cost").innerText = money.format(carRentalCost)
+            document.getElementById("options-cost").innerText = money.format(optionsCost);
+            document.getElementById("under25-cost").innerText = money.format(ageSurcharge);
+            document.getElementById("total-cost").innerText = money.format(total);
             document.getElementById("results-table").style.display = "block"
         }
 
