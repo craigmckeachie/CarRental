@@ -16,6 +16,11 @@
             margin-bottom: 1.5em;
             padding: 1.5em;
         }
+
+        input,
+        button {
+            margin-bottom: 1.5em;
+        }
     </style>
 
 </head>
@@ -24,7 +29,8 @@
     <h1>ACME Car Rental</h1>
     <form onsubmit="estimateTotalCost(event);">
         <label for="pickup-date">Pickup date:</label>
-        <input type="date" name="pickupDate" id="pickup-date">
+        <input type="date" required name="pickupDate" id="pickup-date">
+        <br>
         <label for="number-of-days">Number of days:</label>
         <input type="number" required name="numberOfDays" id="number-of-days">
         <fieldset>
@@ -47,26 +53,26 @@
         </fieldset>
         <button type="submit">Estimated Total Cost</button>
     </form>
-    <table>
+    <table id="results-table" style="display:none">
         <tbody>
             <tr>
                 <td>Car Rental:</td>
-                <td id="car-rental-cost">XX.XX</td>
+                <td id="car-rental-cost"></td>
 
             </tr>
             <tr>
                 <td>Options:</td>
-                <td id="options-cost">XX.XX</td>
+                <td id="options-cost"></td>
             </tr>
             <tr>
                 <td>Under 25 surcharge:</td>
-                <td id="under25-cost">XX.XX</td>
+                <td id="under25-cost"></td>
             </tr>
         </tbody>
         <tfoot>
             <tr>
                 <td>Total:</td>
-                <td id="total-cost">XX.XX</td>
+                <td id="total-cost"></td>
             </tr>
         </tfoot>
     </table>
@@ -77,21 +83,20 @@
             let tollTag = document.getElementById("toll-tag").checked;
             let gps = document.getElementById("gps").checked;
             let roadside = document.getElementById("roadside").checked;
-            let ageSurchageSelectedOption = document.querySelector("input[name='ynOption']:checked");
+            let applyAgeSurchage = document.querySelector("input[name='ynOption']:checked")?.value;
 
             //calculate total
             let carRentalCost = 29.99 * days;
             let optionsCost = calculateOptionsCost(tollTag, gps, roadside, days);
-            let ageSurcharge = 0;
-            if (ageSurchageSelectedOption) {
-                ageSurcharge = calculateAgeSurcharge(ageSurchageSelectedOption.value, carRentalCost);
-            }
+            let ageSurcharge = calculateAgeSurcharge(applyAgeSurchage, carRentalCost);
+
             let total = calculateTotal(carRentalCost, optionsCost, ageSurcharge);
 
-            document.getElementById("car-rental-cost").innerText = carRentalCost;
-            document.getElementById("options-cost").innerText = optionsCost;
-            document.getElementById("under25-cost").innerText = ageSurcharge;
-            document.getElementById("total-cost").innerText = total;
+            document.getElementById("car-rental-cost").innerText = carRentalCost.toFixed(2);
+            document.getElementById("options-cost").innerText = optionsCost.toFixed(2);
+            document.getElementById("under25-cost").innerText = ageSurcharge.toFixed(2);
+            document.getElementById("total-cost").innerText = total.toFixed(2);
+            document.getElementById("results-table").style.display = "block"
         }
 
         function calculateOptionsCost(tollTag, gps, roadside, days) {
@@ -108,9 +113,9 @@
             return optionsCost;
         }
 
-        function calculateAgeSurcharge(ageSurchargeValue, carRentalCost) {
+        function calculateAgeSurcharge(applyAgeSurcharge, carRentalCost) {
             let ageSurcharge = 0;
-            if (ageSurchargeValue === "yes") {
+            if (applyAgeSurcharge === "yes") {
                 ageSurcharge = (carRentalCost * .3);
             }
             return ageSurcharge
