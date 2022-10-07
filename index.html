@@ -12,11 +12,12 @@
 
 <body>
     <div class="container">
-        <h1>ACME Car Rental</h1>
+        <h1>Acme Car Rental</h1>
         <form class="mt-5" onsubmit="estimateTotalCost(event);">
             <div class="row mb-3 ">
                 <label for="pickup-date" class="col-sm-2 col-form-label">Pickup date:</label>
-                <div class="col-sm-2"><input type="date" name="pickupDate" id="pickup-date" class="form-control"></div>
+                <div class="col-sm-2"><input type="date" required name="pickupDate" id="pickup-date"
+                        class="form-control"></div>
             </div>
             <div class="row mb-3">
                 <label for="number-of-days" class="col-sm-2 col-form-label">Number of days:</label>
@@ -64,7 +65,7 @@
         </form>
         <div class="row mb-3">
             <div class="col-sm-2  offset-sm-2">
-                <table class="table table-striped-columns table-info " id="results-table" style="display:none">
+                <table class="table table-striped-columns table-info mt-4 " id="results-table" style="display:none">
                     <tbody>
                         <tr>
                             <td>Car Rental:</td>
